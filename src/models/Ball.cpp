@@ -2,10 +2,11 @@
 #include <QBrush>
 
 Ball::Ball(const QPointF& pos, const qreal radius)
-    : QGraphicsEllipseItem(0, 0, radius, radius),m_radius(radius) {
+    : QGraphicsEllipseItem(-radius / 2, radius / 2, radius, radius),
+      m_radius(radius) {
   setBrush(Qt::blue);
   setPos(pos);
-  
+
   // Prevent individual updates triggering repaints
   setFlag(QGraphicsItem::ItemIgnoresTransformations, true);
 }
