@@ -9,7 +9,9 @@ class BaseView {
  public:
   BaseView(QGraphicsScene* scene, QGraphicsView* view);
   void addBall(Ball* ball);
+  void addGraphicsItem(QGraphicsItem* item);
   void render();
+  QGraphicsScene* getScene() const;
 
  private:
   QGraphicsScene* m_scene;
