@@ -5,17 +5,29 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 
 qt_standard_project_setup()
 
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
 qt_add_executable(BallsSimulator
     WIN32 MACOSX_BUNDLE
-    src/main.cpp
-    src/mainwindow.cpp
-    src/mainwindow.h
+    ${SRC_DIR}/main.cpp
+
+    ${SRC_DIR}/controllers/BaseController.h
+    ${SRC_DIR}/controllers/BaseController.cpp
+
+    ${SRC_DIR}/views/BaseView.h
+    ${SRC_DIR}/views/BaseView.cpp
+
+    ${SRC_DIR}/models/Ball.h
+    ${SRC_DIR}/models/Ball.cpp
 )
+
+
+target_include_directories(BallsSimulator PUBLIC ${SRC_DIR})
 
 target_link_libraries(BallsSimulator
     PRIVATE
-        Qt::Core
-        Qt::Widgets
+        Qt6::Core
+        Qt6::Widgets
 )
 
 if(MINGW)
