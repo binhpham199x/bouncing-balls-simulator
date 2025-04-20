@@ -1,13 +1,30 @@
 #include <QApplication>
-#include "mainwindow.h"
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include "controllers/BaseController.h"
+#include "views/BaseView.h"
 
-#include <iostream>
+int main(int argc, char* argv[]) {
+  QApplication a(argc, argv);
 
-int main(int argc, char *argv[])
-{
-    qDebug() << "Bouncing Balls";
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+  int windowWidth = 1000;
+  int windowHeight = 800;
+
+  QGraphicsScene scene;
+  scene.setSceneRect(0, 0, windowWidth, windowHeight);
+
+  QGraphicsView view(&scene);
+  view.setRenderHint(QPainter::Antialiasing);
+
+  view.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  view.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+  view.setFixedSize(windowWidth, windowHeight);
+
+  view.show();
+
+  BaseView ballView(&scene, &view);
+  BaseController controller(&ballView);
+
+  return a.exec();
 }
