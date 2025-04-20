@@ -19,6 +19,8 @@ qt_add_executable(BallsSimulator
 
     ${SRC_DIR}/models/Ball.h
     ${SRC_DIR}/models/Ball.cpp
+    ${SRC_DIR}/models/CircleWall.h
+    ${SRC_DIR}/models/CircleWall.cpp
 )
 
 
