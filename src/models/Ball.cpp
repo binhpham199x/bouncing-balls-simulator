@@ -2,7 +2,7 @@
 #include <QBrush>
 
 Ball::Ball(const QPointF& pos, const qreal radius)
-    : QGraphicsEllipseItem(-radius / 2, radius / 2, radius, radius),
+    : QGraphicsEllipseItem(-radius, -radius, radius * 2, radius * 2),
       m_radius(radius) {
   setBrush(Qt::blue);
   setPos(pos);
