@@ -13,6 +13,7 @@ class BaseController : public QObject {
 
  private:
   void createBall(qreal x, qreal y, qreal radius);
+  void createCircleWall(qreal radius);
  public slots:
   void update();
 
