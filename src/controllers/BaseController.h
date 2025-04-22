@@ -16,10 +16,11 @@ class BaseController : public QObject {
  private:
   void createBall(qreal x, qreal y, qreal radius);
   void createCircleWall(qreal radius);
+  
   bool doesBallCollideCircleWall(const Ball* ball);
   QPointF calculateNewBallVelocity(const Ball* ball);
+  void correctBallPositionOnWallCollide(Ball* ball);
   void handleBallWallCollide(Ball* ball);
-
 
  public slots:
   void update();

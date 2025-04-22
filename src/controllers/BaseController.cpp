@@ -36,8 +36,8 @@ bool BaseController::doesBallCollideCircleWall(const Ball* ball) {
   qreal circleRadius = m_circleWall->getRadius();
 
   qreal distance = QLineF(ball->pos(), m_circleWall->pos()).length();
-  
-  return ((distance + ballRadius) >= circleRadius);
+
+  return ((distance + ballRadius) > circleRadius);
 }
 
 QPointF BaseController::calculateNewBallVelocity(const Ball* ball) {
@@ -50,7 +50,20 @@ QPointF BaseController::calculateNewBallVelocity(const Ball* ball) {
                                 QPointF::dotProduct(t, t));
 
   QPointF ballNewVelocity = 2 * projectionVOnT - ball->getVelocity();
+
   return ballNewVelocity;
+}
+
+void BaseController::correctBallPositionOnWallCollide(Ball* ball) {
+  // d is radius vector of circle wall
+  QPointF d = QPointF(ball->pos() - m_circleWall->pos());
+  qreal dLength = QLineF(QPointF(0, 0), d).length();
+  qDebug() << "dLength" << dLength;
+
+  QPointF dUnit = d / dLength;
+  qDebug() << "dunit" << dUnit;
+  QPointF ballPos = m_circleWall->pos() + dUnit * (m_circleWall->getRadius() - ball->getRadius());
+  ball->setPos(ballPos);
 }
 
 void BaseController::handleBallWallCollide(Ball* ball) {
@@ -59,7 +72,7 @@ void BaseController::handleBallWallCollide(Ball* ball) {
 }
 
 void BaseController::updateSimulatorState() {
-  qreal gravityFactor = 0.2;
+  qreal gravityFactor = 0.5;
   QPointF gravity = {0, gravityFactor * 1};
 
   for (Ball* ball : m_balls) {
@@ -67,6 +80,7 @@ void BaseController::updateSimulatorState() {
 
     if (this->doesBallCollideCircleWall(ball)) {
       this->handleBallWallCollide(ball);
+      this->correctBallPositionOnWallCollide(ball);
     }
   }
 }
