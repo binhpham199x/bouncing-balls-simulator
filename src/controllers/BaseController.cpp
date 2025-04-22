@@ -72,7 +72,7 @@ void BaseController::handleBallWallCollide(Ball* ball) {
 }
 
 void BaseController::updateSimulatorState() {
-  qreal gravityFactor = 0.5;
+  qreal gravityFactor = 1;
   QPointF gravity = {0, gravityFactor * 1};
 
   for (Ball* ball : m_balls) {

@@ -1,11 +1,13 @@
 #include "Ball.h"
 #include <QBrush>
+#include <QPen>
 
 Ball::Ball(const QPointF& pos, const qreal radius)
     : QGraphicsEllipseItem(-radius, -radius, radius * 2, radius * 2),
       m_radius(radius),
       m_velocity(0, 0) {
-  setBrush(Qt::blue);
+  setPen(Qt::NoPen);
+  setBrush(Qt::red);
   setPos(pos);
 
   // Prevent individual updates triggering repaints
