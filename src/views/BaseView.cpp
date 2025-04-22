@@ -7,7 +7,7 @@ BaseView::BaseView(QGraphicsScene* scene, QGraphicsView* view)
   m_view->setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
 }
 
-QGraphicsScene* BaseView::getScene() const{
+QGraphicsScene* BaseView::getScene() const {
   return m_scene;
 }
 
@@ -16,7 +16,7 @@ void BaseView::addBall(Ball* ball) {
   m_scene->addItem(ball);
 }
 
-void BaseView::addGraphicsItem(QGraphicsItem* item){
+void BaseView::addGraphicsItem(QGraphicsItem* item) {
   m_scene->addItem(item);
 }
 
