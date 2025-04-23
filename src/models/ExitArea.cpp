@@ -16,7 +16,7 @@ ExitArea::ExitArea(const QPointF& rotateCorner,
   QPolygonF triangle = this->calculateTriangle();
   setPolygon(triangle);
 
-  setBrush(Qt::white);
+  setBrush(Qt::black);
   setPen(Qt::NoPen);
 }
 QPointF ExitArea::calculateStartCorner() const {
