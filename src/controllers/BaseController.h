@@ -12,7 +12,6 @@ class BaseController : public QObject {
   Q_OBJECT
  public:
   explicit BaseController(BaseView* view, QObject* parent = nullptr);
-  ~BaseController();
   void updateSimulatorState();
 
  private:
