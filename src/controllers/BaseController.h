@@ -2,7 +2,7 @@
 
 #include <QObject>
 #include <QTimer>
-#include <vector>
+#include <list>
 #include "models/Ball.h"
 #include "models/CircleWall.h"
 #include "models/ExitArea.h"
@@ -24,13 +24,14 @@ class BaseController : public QObject {
   void correctBallPositionOnWallCollide(Ball* ball);
   void handleBallWallCollide(Ball* ball);
   bool isBallInExitArea(Ball* ball) const;
+  bool isBallOutScreen(Ball* ball) const;
 
  public slots:
   void update();
 
  private:
   BaseView* m_view;
-  std::vector<Ball*> m_balls;
+  std::list<Ball*> m_balls;
   CircleWall* m_circleWall;
   ExitArea* m_exitArea;
 };

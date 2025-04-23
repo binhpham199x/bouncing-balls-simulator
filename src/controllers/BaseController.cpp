@@ -17,7 +17,7 @@ void BaseController::createBall(qreal x, qreal y, qreal radius) {
   QPointF pos = {x, y};
   Ball* ball = new Ball(pos, radius);
   m_balls.push_back(ball);
-  m_view->addBall(ball);
+  m_view->addGraphicsItem(ball);
 }
 
 void BaseController::createCircleWallAtCenter(qreal radius) {
@@ -105,12 +105,30 @@ void BaseController::handleBallWallCollide(Ball* ball) {
   ball->setVelocity(ballNewVelocity);
 }
 
+bool BaseController::isBallOutScreen(Ball* ball) const {
+  qreal screenWidth = m_view->getScene()->width();
+  qreal screenHeight = m_view->getScene()->height();
+  qreal bX = ball->x();
+  qreal bY = ball->y();
+  qreal bR = ball->getRadius();
+
+  return (bX - bR < 0 || bX + bR > screenWidth || bY - bR < 0 ||
+          bY + bR > screenHeight);
+}
+
 void BaseController::updateSimulatorState() {
   qreal gravityFactor = 1;
   QPointF gravity = {0, gravityFactor * 1};
+  std::vector<Ball*> toRemove;
 
   for (Ball* ball : m_balls) {
     ball->update(gravity);
+
+    if (this->isBallOutScreen(ball)) {
+      m_view->getScene()->removeItem(ball);
+      toRemove.push_back(ball);
+      continue;
+    }
 
     if (!this->doesBallCollideCircleWall(ball)) {
       continue;
@@ -124,6 +142,12 @@ void BaseController::updateSimulatorState() {
 
     ball->setVelocity(ballNewVelocity);
   }
+
+  if (toRemove.size() > 0)
+    for (Ball* ball : toRemove) {
+      m_balls.remove(ball);
+      delete ball;
+    }
 
   if (m_exitArea->getRotateSpeed() != 0)
     m_exitArea->rotate();
