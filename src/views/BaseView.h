@@ -12,6 +12,7 @@ class BaseView {
   void addGraphicsItem(QGraphicsItem* item);
   void render();
   QGraphicsScene* getScene() const;
+  QPointF getCenterPoint() const;
 
  private:
   QGraphicsScene* m_scene;

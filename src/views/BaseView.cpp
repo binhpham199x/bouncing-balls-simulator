@@ -11,6 +11,15 @@ QGraphicsScene* BaseView::getScene() const {
   return m_scene;
 }
 
+QPointF BaseView::getCenterPoint() const{
+  qreal sceneWidth = this->m_scene->width();
+  qreal sceneHeight = this->m_scene->height();
+
+  QPointF center = {(sceneWidth / 2), (sceneHeight / 2)};
+
+  return center;
+}
+
 void BaseView::addBall(Ball* ball) {
   m_balls.push_back(ball);
   m_scene->addItem(ball);
