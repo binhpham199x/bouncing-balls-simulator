@@ -4,8 +4,8 @@
 
 BaseController::BaseController(BaseView* view, QObject* parent)
     : QObject(parent), m_view(view) {
-  this->createCircleWall(350);
-
+  this->createCircleWallAtCenter(350);
+  this->createExitAreaAtCenter(500);
   this->createBall(400, 100, 20);
 
   QTimer* timer = new QTimer(this);
@@ -20,15 +20,19 @@ void BaseController::createBall(qreal x, qreal y, qreal radius) {
   m_view->addBall(ball);
 }
 
-void BaseController::createCircleWall(qreal radius) {
-  qreal sceneWidth = m_view->getScene()->width();
-  qreal sceneHeight = m_view->getScene()->height();
-
-  QPointF center = {(sceneWidth / 2), (sceneHeight / 2)};
-
+void BaseController::createCircleWallAtCenter(qreal radius) {
+  QPointF center = m_view->getCenterPoint();
+  
   CircleWall* circleWall = new CircleWall(center, radius);
   m_view->addGraphicsItem(circleWall);
   m_circleWall = circleWall;
+}
+
+void BaseController::createExitAreaAtCenter(qreal length){
+  QPointF center = m_view->getCenterPoint();
+  ExitArea* exitArea = new ExitArea(center, length);
+  m_view->addGraphicsItem(exitArea);
+  m_exitArea = exitArea;
 }
 
 bool BaseController::doesBallCollideCircleWall(const Ball* ball) {
@@ -88,4 +92,9 @@ void BaseController::updateSimulatorState() {
 void BaseController::update() {
   this->updateSimulatorState();
   m_view->render();
+}
+
+
+BaseController::~BaseController(){
+
 }
