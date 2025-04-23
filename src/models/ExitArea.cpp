@@ -42,9 +42,6 @@ void ExitArea::rotate() {
   this->normalizeAngle();
   QPolygonF triangle = this->calculateTriangle();
   setPolygon(triangle);
-
-  qDebug() << "start" << m_startAngle;
-  qDebug() << "end" << m_endAngle;
 }
 
 QPolygonF ExitArea::calculateTriangle() const {

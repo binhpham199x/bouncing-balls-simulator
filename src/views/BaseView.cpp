@@ -20,11 +20,6 @@ QPointF BaseView::getCenterPoint() const{
   return center;
 }
 
-void BaseView::addBall(Ball* ball) {
-  m_balls.push_back(ball);
-  m_scene->addItem(ball);
-}
-
 void BaseView::addGraphicsItem(QGraphicsItem* item) {
   m_scene->addItem(item);
 }
