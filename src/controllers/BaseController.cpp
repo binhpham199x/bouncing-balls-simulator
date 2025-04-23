@@ -10,7 +10,7 @@ BaseController::BaseController(BaseView* view, QObject* parent)
 
   QTimer* timer = new QTimer(this);
   connect(timer, &QTimer::timeout, this, &BaseController::update);
-  timer->start(16);
+  timer->start(100);
 }
 
 void BaseController::createBall(qreal x, qreal y, qreal radius) {
@@ -31,14 +31,14 @@ void BaseController::createCircleWallAtCenter(qreal radius) {
 void BaseController::createExitAreaAtCenter(qreal length) {
   QPointF center = m_view->getCenterPoint();
 
-  int factor = 2;
+  qreal factor = 0.5;
   qreal rotateSpeed = M_PI / (180 * factor);
   ExitArea* exitArea = new ExitArea(center, length, rotateSpeed);
   m_view->addGraphicsItem(exitArea);
   m_exitArea = exitArea;
 }
 
-bool BaseController::doesBallCollideCircleWall(const Ball* ball) {
+bool BaseController::doesBallCollideCircleWall(const Ball* ball) const {
   qreal ballRadius = ball->getRadius();
   qreal circleRadius = m_circleWall->getRadius();
 
@@ -64,6 +64,29 @@ QPointF BaseController::calculateNewBallVelocity(const Ball* ball) {
   return ballNewVelocity;
 }
 
+bool BaseController::isBallInExitArea(Ball* ball) const {
+  qreal twoPi = 2.0 * M_PI;
+  qreal startAngle = m_exitArea->getStartAngle();
+  qreal endAngle = m_exitArea->getEndAngle();
+
+  QPointF ballPos = ball->pos();
+  QPointF circleCenter = m_circleWall->pos();
+
+  qreal dx = ballPos.x() - circleCenter.x();
+  qreal dy = ballPos.y() - circleCenter.y();
+  qreal ballAngle = qAtan2(dy, dx);
+
+  if (ballAngle < 0)
+    ballAngle += twoPi;
+
+  if ((ballAngle >= startAngle && ballAngle <= endAngle) ||
+      (ballAngle + twoPi >= startAngle && ballAngle + twoPi <= endAngle)) {
+    return true;
+  }
+
+  return false;
+}
+
 void BaseController::correctBallPositionOnWallCollide(Ball* ball) {
   // d is radius vector of circle wall
   QPointF d = QPointF(ball->pos() - m_circleWall->pos());
@@ -83,23 +106,27 @@ void BaseController::handleBallWallCollide(Ball* ball) {
 }
 
 void BaseController::updateSimulatorState() {
-  if (m_exitArea->getRotateSpeed() != 0)
-    m_exitArea->rotate();
-
   qreal gravityFactor = 1;
   QPointF gravity = {0, gravityFactor * 1};
 
   for (Ball* ball : m_balls) {
     ball->update(gravity);
 
-    if (this->doesBallCollideCircleWall(ball)) {
-      this->correctBallPositionOnWallCollide(ball);
-
-      QPointF ballNewVelocity = this->calculateNewBallVelocity(ball);
-
-      ball->setVelocity(ballNewVelocity);
+    if (!this->doesBallCollideCircleWall(ball)) {
+      continue;
     }
+    if (this->isBallInExitArea(ball)) {
+      continue;
+    }
+
+    this->correctBallPositionOnWallCollide(ball);
+    QPointF ballNewVelocity = this->calculateNewBallVelocity(ball);
+
+    ball->setVelocity(ballNewVelocity);
   }
+
+  if (m_exitArea->getRotateSpeed() != 0)
+    m_exitArea->rotate();
 }
 
 void BaseController::update() {

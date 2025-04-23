@@ -13,6 +13,8 @@ class ExitArea : public QGraphicsPolygonItem {
   qreal getLength() const;
   qreal getRotateSpeed() const;
   void rotate();
+  qreal getStartAngle() const;
+  qreal getEndAngle() const;
 
  private:
  QPointF calculateStartCorner() const;

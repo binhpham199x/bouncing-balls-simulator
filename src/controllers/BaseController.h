@@ -19,10 +19,11 @@ class BaseController : public QObject {
   void createCircleWallAtCenter(qreal radius);
   void createExitAreaAtCenter(qreal length);
   
-  bool doesBallCollideCircleWall(const Ball* ball);
+  bool doesBallCollideCircleWall(const Ball* ball) const;
   QPointF calculateNewBallVelocity(const Ball* ball);
   void correctBallPositionOnWallCollide(Ball* ball);
   void handleBallWallCollide(Ball* ball);
+  bool isBallInExitArea(Ball* ball) const;
 
  public slots:
   void update();

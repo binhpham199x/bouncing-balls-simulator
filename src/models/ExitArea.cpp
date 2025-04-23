@@ -57,11 +57,22 @@ QPolygonF ExitArea::calculateTriangle() const {
 }
 
 void ExitArea::normalizeAngle() {
+  qreal twoPi = 2.0 * M_PI;
   m_startAngle = std::fmod(m_startAngle, 2.0 * M_PI);
   if (m_startAngle < 0)
-    m_startAngle += 2.0 * M_PI;
+    m_startAngle += twoPi;
 
   m_endAngle = std::fmod(m_endAngle, 2.0 * M_PI);
   if (m_endAngle < 0)
-    m_endAngle += 2.0 * M_PI;
+    m_endAngle += 2.0 * twoPi;
+
+  if (m_startAngle < m_endAngle)
+    m_endAngle += 2.0 * twoPi;
+}
+
+qreal ExitArea::getStartAngle() const {
+  return m_startAngle;
+}
+qreal ExitArea::getEndAngle() const {
+  return m_endAngle;
 }
