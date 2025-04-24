@@ -119,7 +119,7 @@ bool BaseController::isBallOutScreen(Ball* ball) const {
 void BaseController::updateSimulatorState() {
   qreal gravityFactor = 1;
   QPointF gravity = {0, gravityFactor * 1};
-  std::vector<Ball*> toRemove;
+  std::list<Ball*> toRemove;
 
   for (Ball* ball : m_balls) {
     ball->update(gravity);
