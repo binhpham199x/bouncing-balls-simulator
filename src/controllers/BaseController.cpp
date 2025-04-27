@@ -41,6 +41,12 @@ void BaseController::createExitAreaAtCenter(qreal length) {
   m_exitArea = exitArea;
 }
 
+void BaseController::spawnBallsOnBallExit(int numOfBalls) {
+  for (int i = 0; i < numOfBalls; i++) {
+    this->createBall();
+  }
+}
+
 bool BaseController::doesBallCollideCircleWall(const Ball* ball) const {
   qreal ballRadius = ball->getRadius();
   qreal circleRadius = m_circleWall->getRadius();
@@ -152,6 +158,11 @@ void BaseController::updateSimulatorState() {
       m_view->getScene()->removeItem(ball);
       delete ball;
     }
+
+    for (int i = 0; i < numOfBallsExit; i++) {
+      this->spawnBallsOnBallExit(2);
+    }
+  }
 
   if (m_exitArea->getRotateSpeed() != 0)
     m_exitArea->rotate();
