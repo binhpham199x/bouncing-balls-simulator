@@ -5,9 +5,9 @@
 
 class Ball : public QGraphicsEllipseItem {
  public:
-  Ball(const QPointF& pos,
-       const QPointF& vel = QPoint(0, 0),
-       const qreal radius = 10);
+  Ball(const QPointF& pos);
+  Ball(const QPointF& pos, const QPointF& vel);
+  Ball(const QPointF& pos, const QPointF& vel, const qreal radius);
   Ball(const QPointF& pos,
        const QPointF& vel,
        const qreal radius,
@@ -18,7 +18,7 @@ class Ball : public QGraphicsEllipseItem {
   void setVelocity(const QPointF& velocity);
 
  private:
-  QColor randomizeColor();
+  static QColor randomizeColor();
   QPointF randomizeStartVel();
 
  private:

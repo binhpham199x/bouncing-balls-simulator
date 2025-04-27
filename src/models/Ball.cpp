@@ -3,8 +3,13 @@
 #include <QPen>
 #include <QRandomGenerator>
 
+Ball::Ball(const QPointF& pos) : Ball(pos, this->randomizeStartVel()) {}
+
+Ball::Ball(const QPointF& pos, const QPointF& vel)
+    : Ball(pos, vel, 10, this->randomizeColor()) {}
+
 Ball::Ball(const QPointF& pos, const QPointF& vel, const qreal radius)
-    : Ball(pos, this->randomizeStartVel(), radius, this->randomizeColor()) {}
+    : Ball(pos, vel, radius, this->randomizeColor()) {}
 
 Ball::Ball(const QPointF& pos,
            const QPointF& vel,
