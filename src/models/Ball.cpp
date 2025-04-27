@@ -1,13 +1,17 @@
 #include "Ball.h"
 #include <QBrush>
 #include <QPen>
+#include <QRandomGenerator>
 
 Ball::Ball(const QPointF& pos, const qreal radius)
+    : Ball(pos, radius, this->randomizeColor()) {}
+
+Ball::Ball(const QPointF& pos, const qreal radius, const QColor& color)
     : QGraphicsEllipseItem(-radius, -radius, radius * 2, radius * 2),
       m_radius(radius),
       m_velocity(0, 0) {
   setPen(Qt::NoPen);
-  setBrush(Qt::red);
+  setBrush(QBrush(color));
   setPos(pos);
 
   // Prevent individual updates triggering repaints
@@ -31,4 +35,12 @@ void Ball::update(const QPointF& gravity) {
   QPointF newPos = pos() + m_velocity;
 
   setPos(newPos);
+}
+
+QColor Ball::randomizeColor() {
+  QRandomGenerator* rnd = QRandomGenerator::global();
+  int r = rnd->bounded(256);
+  int g = rnd->bounded(256);
+  int b = rnd->bounded(256);
+  return QColor(r, g, b);
 }
