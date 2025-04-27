@@ -140,10 +140,16 @@ void BaseController::updateSimulatorState() {
       continue;
     }
 
+    if (!ball->getIsInside()) {
+      continue;
+    }
+
     if (!this->doesBallCollideCircleWall(ball)) {
       continue;
     }
+
     if (this->isBallInExitArea(ball)) {
+      ball->gotOut();
       continue;
     }
 

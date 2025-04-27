@@ -16,6 +16,8 @@ class Ball : public QGraphicsEllipseItem {
   qreal getRadius() const;
   QPointF getVelocity() const;
   void setVelocity(const QPointF& velocity);
+  bool getIsInside() const;
+  void gotOut();
 
  private:
   static QColor randomizeColor();
@@ -24,4 +26,5 @@ class Ball : public QGraphicsEllipseItem {
  private:
   QPointF m_velocity;
   qreal m_radius;
+  bool m_isInside;
 };

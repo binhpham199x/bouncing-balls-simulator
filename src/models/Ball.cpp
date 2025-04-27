@@ -17,7 +17,8 @@ Ball::Ball(const QPointF& pos,
            const QColor& color)
     : QGraphicsEllipseItem(-radius, -radius, radius * 2, radius * 2),
       m_radius(radius),
-      m_velocity(vel.x(), vel.y()) {
+      m_velocity(vel.x(), vel.y()),
+      m_isInside(true) {
   setPen(Qt::NoPen);
   setBrush(QBrush(color));
   setPos(pos);
@@ -45,6 +46,13 @@ void Ball::update(const QPointF& gravity) {
   setPos(newPos);
 }
 
+bool Ball::getIsInside() const{
+  return m_isInside;
+}
+void Ball::gotOut(){
+  m_isInside = false;
+}
+
 QColor Ball::randomizeColor() {
   QRandomGenerator* rnd = QRandomGenerator::global();
   int r = rnd->bounded(256);
@@ -56,6 +64,6 @@ QColor Ball::randomizeColor() {
 QPointF Ball::randomizeStartVel() {
   QRandomGenerator* rnd = QRandomGenerator::global();
   qreal x = static_cast<qreal>(rnd->bounded(-5, 6));
-  qreal y = static_cast<qreal>(rnd->bounded(-5, 6));
+  qreal y = static_cast<qreal>(rnd->bounded(-9, 6));
   return {x, y};
 };
