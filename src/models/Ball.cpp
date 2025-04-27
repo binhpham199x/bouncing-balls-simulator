@@ -55,7 +55,7 @@ QColor Ball::randomizeColor() {
 
 QPointF Ball::randomizeStartVel() {
   QRandomGenerator* rnd = QRandomGenerator::global();
-  qreal x = static_cast<qreal>(rnd->bounded(-4, 5));
-  qreal y = static_cast<qreal>(rnd->bounded(-4, 2));
+  qreal x = static_cast<qreal>(rnd->bounded(-5, 6));
+  qreal y = static_cast<qreal>(rnd->bounded(-5, 6));
   return {x, y};
 };

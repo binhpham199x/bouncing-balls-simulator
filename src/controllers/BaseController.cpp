@@ -18,6 +18,9 @@ BaseController::BaseController(BaseView* view, QObject* parent)
 
 void BaseController::createBall() {
   QPointF pos = m_circleWall->pos();
+  qreal r = m_circleWall->getRadius();
+  pos.setY(pos.y() - r / 2);
+
   Ball* ball = new Ball(pos);
   m_balls.push_back(ball);
   m_view->addGraphicsItem(ball);
@@ -125,7 +128,7 @@ bool BaseController::isBallOutScreen(Ball* ball) const {
 }
 
 void BaseController::updateSimulatorState() {
-  qreal gravityFactor = 0.5;
+  qreal gravityFactor = 0.3;
   QPointF gravity = {0, gravityFactor * 1};
   std::list<Ball*> toRemove;
 
