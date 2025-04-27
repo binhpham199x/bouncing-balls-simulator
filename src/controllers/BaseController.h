@@ -15,7 +15,7 @@ class BaseController : public QObject {
   void updateSimulatorState();
 
  private:
-  void createBall(qreal x, qreal y, qreal radius);
+  void createBall();
   void createCircleWallAtCenter(qreal radius);
   void createExitAreaAtCenter(qreal length);
   
