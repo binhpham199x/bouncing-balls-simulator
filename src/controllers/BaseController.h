@@ -35,4 +35,7 @@ class BaseController : public QObject {
   std::list<Ball*> m_balls;
   CircleWall* m_circleWall;
   ExitArea* m_exitArea;
+
+ public:
+  constexpr static int NUM_OF_BALLS_LIMIT = 3000;
 };

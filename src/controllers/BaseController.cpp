@@ -17,6 +17,10 @@ BaseController::BaseController(BaseView* view, QObject* parent)
 }
 
 void BaseController::createBall() {
+  if (m_balls.size() > NUM_OF_BALLS_LIMIT) {
+    return;
+  }
+
   QPointF pos = m_circleWall->pos();
   qreal r = m_circleWall->getRadius();
   pos.setY(pos.y() - r / 2);
