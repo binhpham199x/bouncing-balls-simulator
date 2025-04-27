@@ -63,7 +63,7 @@ void ExitArea::normalizeAngle() {
   if (m_endAngle < 0)
     m_endAngle += 2.0 * twoPi;
 
-  if (m_startAngle < m_endAngle)
+  if (m_startAngle > m_endAngle)
     m_endAngle += 2.0 * twoPi;
 }
 
