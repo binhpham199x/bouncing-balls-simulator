@@ -62,9 +62,6 @@ void ExitArea::normalizeAngle() {
   m_endAngle = std::fmod(m_endAngle, 2.0 * M_PI);
   if (m_endAngle < 0)
     m_endAngle += 2.0 * twoPi;
-
-  if (m_startAngle > m_endAngle)
-    m_endAngle += 2.0 * twoPi;
 }
 
 qreal ExitArea::getStartAngle() const {
