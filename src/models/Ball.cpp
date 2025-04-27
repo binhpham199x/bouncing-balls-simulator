@@ -3,13 +3,16 @@
 #include <QPen>
 #include <QRandomGenerator>
 
-Ball::Ball(const QPointF& pos, const qreal radius)
-    : Ball(pos, radius, this->randomizeColor()) {}
+Ball::Ball(const QPointF& pos, const QPointF& vel, const qreal radius)
+    : Ball(pos, this->randomizeStartVel(), radius, this->randomizeColor()) {}
 
-Ball::Ball(const QPointF& pos, const qreal radius, const QColor& color)
+Ball::Ball(const QPointF& pos,
+           const QPointF& vel,
+           const qreal radius,
+           const QColor& color)
     : QGraphicsEllipseItem(-radius, -radius, radius * 2, radius * 2),
       m_radius(radius),
-      m_velocity(0, 0) {
+      m_velocity(vel.x(), vel.y()) {
   setPen(Qt::NoPen);
   setBrush(QBrush(color));
   setPos(pos);
@@ -44,3 +47,10 @@ QColor Ball::randomizeColor() {
   int b = rnd->bounded(256);
   return QColor(r, g, b);
 }
+
+QPointF Ball::randomizeStartVel() {
+  QRandomGenerator* rnd = QRandomGenerator::global();
+  qreal x = static_cast<qreal>(rnd->bounded(-4, 5));
+  qreal y = static_cast<qreal>(rnd->bounded(-4, 2));
+  return {x, y};
+};
