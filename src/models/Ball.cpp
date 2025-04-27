@@ -1,13 +1,26 @@
 #include "Ball.h"
 #include <QBrush>
 #include <QPen>
+#include <QRandomGenerator>
 
-Ball::Ball(const QPointF& pos, const qreal radius)
+Ball::Ball(const QPointF& pos) : Ball(pos, this->randomizeStartVel()) {}
+
+Ball::Ball(const QPointF& pos, const QPointF& vel)
+    : Ball(pos, vel, 10, this->randomizeColor()) {}
+
+Ball::Ball(const QPointF& pos, const QPointF& vel, const qreal radius)
+    : Ball(pos, vel, radius, this->randomizeColor()) {}
+
+Ball::Ball(const QPointF& pos,
+           const QPointF& vel,
+           const qreal radius,
+           const QColor& color)
     : QGraphicsEllipseItem(-radius, -radius, radius * 2, radius * 2),
       m_radius(radius),
-      m_velocity(0, 0) {
+      m_velocity(vel.x(), vel.y()),
+      m_isInside(true) {
   setPen(Qt::NoPen);
-  setBrush(Qt::red);
+  setBrush(QBrush(color));
   setPos(pos);
 
   // Prevent individual updates triggering repaints
@@ -32,3 +45,25 @@ void Ball::update(const QPointF& gravity) {
 
   setPos(newPos);
 }
+
+bool Ball::getIsInside() const{
+  return m_isInside;
+}
+void Ball::gotOut(){
+  m_isInside = false;
+}
+
+QColor Ball::randomizeColor() {
+  QRandomGenerator* rnd = QRandomGenerator::global();
+  int r = rnd->bounded(256);
+  int g = rnd->bounded(256);
+  int b = rnd->bounded(256);
+  return QColor(r, g, b);
+}
+
+QPointF Ball::randomizeStartVel() {
+  QRandomGenerator* rnd = QRandomGenerator::global();
+  qreal x = static_cast<qreal>(rnd->bounded(-5, 6));
+  qreal y = static_cast<qreal>(rnd->bounded(-9, 6));
+  return {x, y};
+};

@@ -15,10 +15,11 @@ class BaseController : public QObject {
   void updateSimulatorState();
 
  private:
-  void createBall(qreal x, qreal y, qreal radius);
+  void createBall();
   void createCircleWallAtCenter(qreal radius);
   void createExitAreaAtCenter(qreal length);
-  
+
+  void spawnBallsOnBallExit(int numOfBalls);
   bool doesBallCollideCircleWall(const Ball* ball) const;
   QPointF calculateNewBallVelocity(const Ball* ball);
   void correctBallPositionOnWallCollide(Ball* ball);
@@ -34,4 +35,7 @@ class BaseController : public QObject {
   std::list<Ball*> m_balls;
   CircleWall* m_circleWall;
   ExitArea* m_exitArea;
+
+ public:
+  constexpr static int NUM_OF_BALLS_LIMIT = 3000;
 };
