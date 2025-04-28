@@ -7,3 +7,4 @@ BBS-4: Refactor creating logic for ball and circle wall in controller class
 BBS-5: Add boucing logic for balls
 BBS-6: Add triangle as exit for circle wall
 BBS-7: Add logic for spawning balls on ball exit
+BBS-8: Build and Zip release version of the project
